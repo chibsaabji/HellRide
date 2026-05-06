@@ -1,0 +1,35 @@
+[
+  {
+    "id": "1777427973367",
+    "name": "Test User",
+    "phone": "+7 999 000",
+    "email": "test@test.com",
+    "model": "McLaren W1",
+    "date": "2026-05-05",
+    "time": "10:00",
+    "submittedAt": "2026-04-29T01:59:33.367Z",
+    "status": "new"
+  },
+  {
+    "id": "1777428128690",
+    "name": "Vanshveer Chib",
+    "phone": "15879719581",
+    "email": "chibvanshveer@gmail.com",
+    "model": "McLaren",
+    "date": "2026-04-30",
+    "time": "16:30",
+    "submittedAt": "2026-04-29T02:02:08.690Z",
+    "status": "new"
+  },
+  {
+    "id": "1777570175092",
+    "name": "Vanshveer Chib",
+    "phone": "15879719581",
+    "email": "chibvanshveer@gmail.com",
+    "model": "BMW M4",
+    "date": "2026-05-22",
+    "time": "15:00",
+    "submittedAt": "2026-04-30T17:29:35.092Z",
+    "status": "new"
+  }
+]

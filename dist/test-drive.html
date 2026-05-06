@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book a Test Drive | HellRide</title>
+  <meta name="description" content="Book your exclusive test drive of the elite HellRide fleet. Experience hyper-performance motion firsthand.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    .test-drive-section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 2rem 4rem;
+      background: radial-gradient(circle at center, #050815 0%, #050505 100%);
+      position: relative;
+    }
+
+    .test-drive-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('/assets/Car-BG-BJeD5KfN.png') center/cover no-repeat;
+      opacity: 0.15;
+      pointer-events: none;
+    }
+
+    .form-container {
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 3rem;
+      width: 100%;
+      max-width: 600px;
+      z-index: 10;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-container p.subtitle {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 1rem;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--glass-border);
+      border-radius: 8px;
+      color: var(--text-main);
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      transition: var(--transition);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--accent-olive);
+      box-shadow: 0 0 10px rgba(112, 130, 56, 0.2);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    select.form-control {
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1em;
+    }
+
+    select.form-control option {
+      background: var(--bg-charcoal);
+      color: var(--text-main);
+    }
+
+    .submit-btn {
+      margin-top: 1rem;
+    }
+
+    /* ── Tablet (≤ 1024px) ────────────────────────────── */
+    @media (max-width: 1024px) {
+      .test-drive-section {
+        padding: 7rem 2rem 4rem;
+      }
+    }
+
+    /* ── Mobile-large (≤ 767px) ──────────────────────── */
+    @media (max-width: 767px) {
+      .test-drive-section {
+        padding: 6rem 1.25rem 3rem;
+        align-items: flex-start;
+      }
+
+      .form-container {
+        padding: 2rem 1.5rem;
+        border-radius: 12px;
+        max-width: 100%;
+      }
+
+      .form-container h2 {
+        font-size: 1.75rem;
+      }
+    }
+
+    /* ── Mobile (≤ 600px) ─────────────────────────────── */
+    @media (max-width: 600px) {
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+    }
+
+    /* ── Mobile-small (≤ 480px) ──────────────────────── */
+    @media (max-width: 480px) {
+      .test-drive-section {
+        padding: 5rem 1rem 2.5rem;
+      }
+
+      .form-container {
+        padding: 1.5rem 1rem;
+        border-radius: 10px;
+      }
+
+      .form-container h2 {
+        font-size: 1.5rem;
+      }
+
+      .form-container p.subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 1.75rem;
+      }
+
+      .form-control {
+        padding: 0.875rem;
+        font-size: 0.95rem;
+      }
+
+      .form-group {
+        margin-bottom: 1.25rem;
+      }
+    }
+  </style>
+  <link rel="icon" type="image/x-icon" href="/assets/Wheel-CsxaPep-.ico">
+  <script type="module" crossorigin src="/assets/testDrive-C_w8ZMSK.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/style-D74fJMD3.js">
+  <link rel="modulepreload" crossorigin href="/assets/main-Bs_B_Yrv.js">
+  <link rel="stylesheet" crossorigin href="/assets/style-C-_yPUyj.css">
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="/index.html" class="logo">
+        <img src="/assets/Logo-C5bi3Bdv.png" alt="HellRide Logo" />
+      </a>
+      <div class="nav-links">
+        <a href="/index.html#home">Home</a>
+        <a href="/index.html#inventory">Inventory</a>
+        <a href="/test-drive.html" class="active">Book Test Drive</a>
+        <a href="/about.html">About</a>
+      </div>
+      <div class="nav-actions" style="display: flex; gap: 1rem; align-items: center;">
+        <button id="nav-login-btn" class="yandex-login" onclick="window.location.href='/login.html'">
+          <i data-lucide="globe" style="width: 16px; height: 16px;"></i>
+          <span>Login</span>
+        </button>
+        <button id="mobile-menu-btn" class="mobile-toggle">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="test-drive-section">
+    <div class="form-container">
+      <h2>Experience the Future</h2>
+      <p class="subtitle">Book your exclusive test drive of the HellRide fleet.</p>
+
+      <form id="test-drive-form">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="td-name" class="form-control" placeholder="Ivan Ivanov" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" id="td-phone" class="form-control" placeholder="+7 (999) 000-00-00" required>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" id="td-email" class="form-control" placeholder="ivan@example.com" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Select Model</label>
+          <select id="model-select" class="form-control" required>
+            <option value="" disabled selected>Loading models...</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Preferred Date <small style="color:var(--text-muted);font-weight:400;">(Mon–Fri only)</small></label>
+            <input type="date" id="td-date" class="form-control" required>
+            <p id="date-error" style="color:#ff5050;font-size:0.8rem;margin-top:0.4rem;display:none;">Weekends are not available. Please pick a weekday.</p>
+          </div>
+          <div class="form-group">
+            <label>Preferred Time <small style="color:var(--text-muted);font-weight:400;">(9 AM – 5 PM)</small></label>
+            <select id="td-time" class="form-control" required>
+              <option value="" disabled selected>Select a slot</option>
+              <option value="09:00">9:00 AM</option>
+              <option value="09:30">9:30 AM</option>
+              <option value="10:00">10:00 AM</option>
+              <option value="10:30">10:30 AM</option>
+              <option value="11:00">11:00 AM</option>
+              <option value="11:30">11:30 AM</option>
+              <option value="12:00">12:00 PM</option>
+              <option value="12:30">12:30 PM</option>
+              <option value="13:00">1:00 PM</option>
+              <option value="13:30">1:30 PM</option>
+              <option value="14:00">2:00 PM</option>
+              <option value="14:30">2:30 PM</option>
+              <option value="15:00">3:00 PM</option>
+              <option value="15:30">3:30 PM</option>
+              <option value="16:00">4:00 PM</option>
+              <option value="16:30">4:30 PM</option>
+              <option value="17:00">5:00 PM</option>
+            </select>
+          </div>
+        </div>
+
+        <button type="submit" class="btn primary full glow submit-btn">Confirm Booking</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <a href="/index.html" class="logo">
+          <img src="/assets/Logo-C5bi3Bdv.png" alt="HellRide Logo" />
+        </a>
+        <p>The convergence of aerospace engineering and hyper-car performance.</p>
+      </div>
+      <div class="footer-links">
+        <div class="link-group">
+          <h4>Explore</h4>
+          <a href="/index.html#inventory">Inventory</a>
+          <a href="/test-drive.html">Test Drive</a>
+          <a href="/about.html">About Us</a>
+        </div>
+        <div class="link-group">
+          <h4>Legal</h4>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; 2026 Vanshveer Chib. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+</body>
+</html>

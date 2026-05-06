@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard | HellRide</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="HellRide Admin Dashboard for inventory and lead management.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .admin-tabs { display: flex; gap: 0.5rem; margin-bottom: 2rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0; }
+    .admin-tab-btn { background: none; border: none; color: var(--text-muted); font-family: 'Inter', sans-serif; font-size: 0.95rem; font-weight: 500; padding: 0.75rem 1.5rem; cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.25s; text-transform: uppercase; letter-spacing: 0.05em; }
+    .admin-tab-btn:hover { color: #fff; }
+    .admin-tab-btn.active { color: var(--accent-olive); border-bottom-color: var(--accent-olive); }
+    .admin-tab-panel { display: none; }
+    .admin-tab-panel.active { display: block; }
+    .leads-table { width: 100%; border-collapse: collapse; }
+    .leads-table th, .leads-table td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--glass-border); font-size: 0.9rem; }
+    .leads-table th { color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.75rem; }
+    .lead-badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600; background: rgba(112,130,56,0.15); color: var(--accent-olive); border: 1px solid rgba(112,130,56,0.3); }
+    .staff-card { display: flex; align-items: center; justify-content: space-between; background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
+    .staff-info { display: flex; align-items: center; gap: 1rem; }
+    .staff-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-olive), #3a4519); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; color: #fff; }
+    .staff-meta small { color: var(--text-muted); display: block; font-size: 0.8rem; }
+    .add-staff-form { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1.75rem; margin-top: 2rem; }
+    .add-staff-form h4 { margin-bottom: 1.25rem; font-size: 1rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2rem; }
+    .stat-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 12px; padding: 1.5rem; }
+    .stat-card h3 { font-size: 2.5rem; color: var(--accent-olive); margin: 0 0 0.25rem; }
+    .stat-card p { color: var(--text-muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; margin: 0; }
+    .btn-icon-del { background: transparent; border: 1px solid rgba(255,80,80,0.3); color: #ff5050; padding: 0.4rem 0.75rem; border-radius: 6px; cursor: pointer; font-size: 0.8rem; transition: all 0.2s; }
+    .btn-icon-del:hover { background: rgba(255,80,80,0.1); }
+    @media (max-width: 768px) { .stats-row { grid-template-columns: 1fr; } .admin-tab-btn { padding: 0.6rem 0.9rem; font-size: 0.8rem; } .leads-table th:nth-child(4), .leads-table td:nth-child(4), .leads-table th:nth-child(5), .leads-table td:nth-child(5) { display: none; } }
+  </style>
+  <link rel="icon" type="image/x-icon" href="/Wheel.ico">
+</head>
+<body class="admin-body">
+  <div id="admin-container">
+    <nav class="navbar scrolled">
+      <div class="nav-container">
+        <a href="/index.html" class="logo"><img src="./Logo/Logo.png" alt="HellRide Logo" /></a>
+        <div class="nav-links">
+          <a href="/index.html">View Site</a>
+          <span style="color: var(--accent-olive); font-weight: 600;">Admin Panel</span>
+          <button id="change-pass-btn" class="btn outline" style="padding: 0.5rem 1rem; border-color: #555;">Security</button>
+          <button id="logout-btn" class="btn outline" style="padding: 0.5rem 1rem;">Logout</button>
+        </div>
+      </div>
+    </nav>
+
+    <section class="admin-dashboard">
+      <div class="container">
+        <!-- Stats Row -->
+        <div class="stats-row">
+          <div class="stat-card"><h3 id="stat-cars">—</h3><p>Vehicles in Fleet</p></div>
+          <div class="stat-card"><h3 id="stat-leads">—</h3><p>Total Leads</p></div>
+          <div class="stat-card"><h3 id="stat-staff">—</h3><p>Staff Accounts</p></div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="admin-tabs">
+          <button class="admin-tab-btn active" data-tab="inventory">Inventory</button>
+          <button class="admin-tab-btn" data-tab="leads">Leads & Messages</button>
+          <button class="admin-tab-btn" data-tab="staff">Staff Accounts</button>
+        </div>
+
+        <!-- Tab: Inventory -->
+        <div id="tab-inventory" class="admin-tab-panel active">
+          <div class="admin-header">
+            <h2>Fleet Inventory</h2>
+            <button class="btn primary glow" id="add-car-btn">+ Add Vehicle</button>
+          </div>
+          <div class="admin-content">
+            <table class="inventory-table">
+              <thead><tr><th>Image</th><th>Model</th><th>Price (₽)</th><th>Specs</th><th>Actions</th></tr></thead>
+              <tbody id="admin-inventory-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Tab: Leads -->
+        <div id="tab-leads" class="admin-tab-panel">
+          <div class="admin-header">
+            <h2>Test Drive Leads</h2>
+            <button class="btn outline" id="refresh-leads-btn" style="padding: 0.6rem 1.25rem;">↻ Refresh</button>
+          </div>
+          <div id="leads-empty" style="display:none; text-align:center; padding: 4rem; color: var(--text-muted);">
+            <p style="font-size: 1.25rem;">No leads yet.</p>
+            <p>Test drive form submissions will appear here.</p>
+          </div>
+          <div class="admin-content" id="leads-table-wrap">
+            <table class="leads-table">
+              <thead><tr><th>Name</th><th>Contact</th><th>Model</th><th>Date & Time</th><th>Received</th><th>Del</th></tr></thead>
+              <tbody id="leads-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Tab: Staff -->
+        <div id="tab-staff" class="admin-tab-panel">
+          <div class="admin-header"><h2>Staff Accounts</h2></div>
+          <div id="staff-list"></div>
+          <div class="add-staff-form">
+            <h4>+ Create New Staff Account</h4>
+            <form id="create-staff-form">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Username</label>
+                  <input type="text" id="new-staff-user" class="form-control" placeholder="e.g. vanshveer" required>
+                </div>
+                <div class="form-group">
+                  <label>Password</label>
+                  <input type="password" id="new-staff-pass" class="form-control" placeholder="Strong password" required>
+                </div>
+              </div>
+              <p id="staff-msg" style="font-size: 0.875rem; margin: 0.5rem 0; display:none;"></p>
+              <button type="submit" class="btn primary" style="margin-top:1rem;">Create Account</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Add/Edit Car Modal -->
+  <div class="modal" id="add-car-modal">
+    <div class="modal-content" style="max-height: 90vh; overflow-y: auto;">
+      <div class="modal-header">
+        <h3>Add New Vehicle</h3>
+        <button class="close-modal">&times;</button>
+      </div>
+      <form id="add-car-form">
+        <input type="hidden" id="car-id">
+        <div class="form-grid">
+          <div class="form-group"><label>Model Name</label><input type="text" id="car-name" class="form-control" placeholder="e.g. HellRide V2" required></div>
+          <div class="form-group">
+            <label>Brand / Make</label>
+            <select id="car-brand" class="form-control" required style="background: rgba(255,255,255,0.05); color:#fff; border:1px solid var(--glass-border); border-radius:8px; padding:0.75rem 1rem;">
+              <option value="Ford" style="color:black">Ford</option><option value="Dodge" style="color:black">Dodge</option><option value="Kia" style="color:black">Kia</option><option value="BMW" style="color:black">BMW</option><option value="Audi" style="color:black">Audi</option><option value="Mercedes" style="color:black">Mercedes</option><option value="Porsche" style="color:black">Porsche</option><option value="Ferrari" style="color:black">Ferrari</option><option value="Lamborghini" style="color:black">Lamborghini</option><option value="Tesla" style="color:black">Tesla</option><option value="McLaren" style="color:black">McLaren</option><option value="Bentley" style="color:black">Bentley</option><option value="Rolls Royce" style="color:black">Rolls Royce</option><option value="Other" style="color:black">Other</option>
+            </select>
+          </div>
+          <div class="form-group form-grid full-width" style="grid-column:1/-1;display:block;"><label>Description</label><textarea id="car-desc" class="form-control" rows="3" placeholder="Detailed description..." required></textarea></div>
+          <div class="form-group"><label>Price (₽)</label><input type="number" id="car-price" class="form-control" placeholder="e.g. 50000000" required></div>
+          <div class="form-group"><label>Horsepower (HP)</label><input type="number" id="car-hp" class="form-control" placeholder="e.g. 1200" required></div>
+          <div class="form-group"><label>Mileage (KM)</label><input type="number" id="car-km" class="form-control" placeholder="e.g. 5000" required></div>
+          <div class="form-group full-width"><label>Upload Media</label><input type="file" id="car-files" class="form-control" multiple accept="image/*,video/*" style="padding-bottom:2rem;"><p style="font-size:0.8rem;color:var(--text-muted);margin-top:0.5rem;">Select files to upload.</p></div>
+          <div class="form-group full-width"><label>Image URLs (Comma separated)</label><input type="text" id="car-images" class="form-control" placeholder="./Inventory/picture.jpg, https://link.com/video.mp4"></div>
+        </div>
+        <button type="submit" class="btn primary full" style="margin-top:1.5rem;" id="submit-btn">Save Vehicle</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Change Password Modal -->
+  <div class="modal" id="change-pass-modal">
+    <div class="modal-content" style="max-width:500px;">
+      <div class="modal-header"><h3>Change Password</h3><button class="close-modal" id="close-pass-modal">&times;</button></div>
+      <form id="change-pass-form">
+        <div class="form-group"><label>Current Password</label><input type="password" id="current-pass" class="form-control" required></div>
+        <div class="form-group"><label>New Password</label><input type="password" id="new-pass" class="form-control" required></div>
+        <p id="pass-error" style="color:#ff4d4d;font-size:0.875rem;display:none;"></p>
+        <p id="pass-success" style="color:var(--accent-olive);font-size:0.875rem;display:none;">Password updated!</p>
+        <button type="submit" class="btn primary full" style="margin-top:1.5rem;">Update Password</button>
+      </form>
+    </div>
+  </div>
+
+  <script type="module">
+  document.addEventListener('DOMContentLoaded', () => {
+    const authToken = localStorage.getItem('ag_admin_token');
+    if (!authToken) { window.location.href = '/login.html'; return; }
+
+    const API = import.meta.env.VITE_API_URL || '';
+    let allCars = [];
+
+    // --- AUTH Headers ---
+    const authHeaders = () => ({ 'Content-Type': 'application/json', 'Authorization': `Bearer ${authToken}` });
+
+    // --- LOGOUT ---
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      localStorage.removeItem('ag_admin_token');
+      window.location.href = '/login.html';
+    });
+
+    // --- TABS ---
+    document.querySelectorAll('.admin-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.admin-tab-panel').forEach(p => p.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+        if (btn.dataset.tab === 'leads') fetchLeads();
+        if (btn.dataset.tab === 'staff') fetchStaff();
+      });
+    });
+
+    // --- STATS ---
+    const updateStats = (cars, leads, staff) => {
+      document.getElementById('stat-cars').textContent = cars ?? '—';
+      document.getElementById('stat-leads').textContent = leads ?? '—';
+      document.getElementById('stat-staff').textContent = staff ?? '—';
+    };
+
+    // === INVENTORY TAB ===
+    const fetchInventory = async () => {
+      try {
+        const res = await fetch(`${API}/api/inventory`);
+        allCars = await res.json();
+        renderTable(allCars);
+        document.getElementById('stat-cars').textContent = allCars.length;
+      } catch (err) { console.error(err); }
+    };
+
+    const renderTable = (cars) => {
+      const tbody = document.getElementById('admin-inventory-body');
+      tbody.innerHTML = '';
+      cars.forEach(car => {
+        const images = car.images ? car.images : (car.image ? [car.image] : []);
+        let mainImg = images[0] || '';
+        if (mainImg.startsWith('./') || mainImg.startsWith('/')) {
+          mainImg = API + mainImg.replace(/^\.\//, '/');
+        }
+        const imgCount = images.length;
+        const desc = car.description ? car.description.substring(0, 50) + (car.description.length > 50 ? '...' : '') : 'No description';
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><div style="position:relative;display:inline-block;"><img src="${mainImg}" alt="${car.name}" class="admin-car-img">${imgCount > 1 ? `<span class="img-badge">${imgCount}</span>` : ''}</div></td>
+          <td><span style="display:inline-block;padding:0.25rem 0.5rem;background:var(--glass-bg);border:1px solid var(--glass-border);border-radius:4px;font-size:0.75rem;margin-bottom:0.25rem;">${car.brand || 'HellRide'}</span><br><strong>${car.name}</strong><br><small style="color:var(--text-muted);">${desc}</small></td>
+          <td>${new Intl.NumberFormat('ru-RU').format(car.price)} ₽</td>
+          <td>${car.hp} HP<br><small style="color:var(--text-muted);">${car.km ? car.km.toLocaleString('ru-RU') + ' KM' : 'N/A'}</small></td>
+          <td>
+            <button class="btn-edit" data-id="${car.id}" style="background:transparent;border:none;color:var(--accent-olive);cursor:pointer;padding:0.5rem;margin-right:0.5rem;"><i data-lucide="edit-2"></i></button>
+            <button class="btn-delete" data-id="${car.id}"><i data-lucide="trash-2"></i></button>
+          </td>`;
+        tbody.appendChild(tr);
+      });
+      lucide.createIcons();
+
+      document.querySelectorAll('.btn-delete').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          const id = e.currentTarget.dataset.id;
+          if (!confirm('Delete this vehicle?')) return;
+          await fetch(`${API}/api/inventory/${id}`, { method: 'DELETE', headers: authHeaders() });
+          fetchInventory();
+        });
+      });
+      document.querySelectorAll('.btn-edit').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const car = allCars.find(c => c.id === e.currentTarget.dataset.id);
+          if (!car) return;
+          isEditMode = true;
+          document.getElementById('car-id').value = car.id;
+          document.getElementById('car-name').value = car.name;
+          document.getElementById('car-brand').value = car.brand || 'HellRide';
+          document.getElementById('car-desc').value = car.description || '';
+          document.getElementById('car-price').value = car.price || '';
+          document.getElementById('car-hp').value = car.hp || '';
+          document.getElementById('car-km').value = car.km || '';
+          document.getElementById('car-images').value = car.images ? car.images.join(', ') : (car.image || '');
+          submitBtn.textContent = 'Save Changes';
+          document.querySelector('#add-car-modal .modal-header h3').textContent = 'Edit Vehicle';
+          document.getElementById('add-car-modal').classList.add('open');
+        });
+      });
+    };
+
+    let isEditMode = false;
+    const modal = document.getElementById('add-car-modal');
+    const form = document.getElementById('add-car-form');
+    const submitBtn = document.getElementById('submit-btn');
+
+    document.getElementById('add-car-btn').addEventListener('click', () => {
+      isEditMode = false; form.reset();
+      submitBtn.textContent = 'Add Vehicle';
+      document.querySelector('#add-car-modal .modal-header h3').textContent = 'Add New Vehicle';
+      modal.classList.add('open');
+    });
+    document.querySelector('#add-car-modal .close-modal').addEventListener('click', () => modal.classList.remove('open'));
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true; submitBtn.textContent = 'Processing...';
+      let uploadedPaths = [];
+      const filesInput = document.getElementById('car-files');
+      if (filesInput.files.length > 0) {
+        const fd = new FormData();
+        for (let i = 0; i < filesInput.files.length; i++) fd.append('files', filesInput.files[i]);
+        try {
+          const r = await fetch(`${API}/api/upload`, { method: 'POST', headers: { 'Authorization': `Bearer ${authToken}` }, body: fd });
+          const d = await r.json();
+          if (r.ok && d.paths) uploadedPaths = d.paths;
+        } catch (err) { console.error('Upload failed:', err); }
+      }
+      const rawImages = document.getElementById('car-images').value;
+      let imagesArray = rawImages.split(',').map(u => u.trim()).filter(u => u.length > 0);
+      imagesArray = [...imagesArray, ...uploadedPaths];
+      const payload = { name: document.getElementById('car-name').value, brand: document.getElementById('car-brand').value, description: document.getElementById('car-desc').value, price: parseInt(document.getElementById('car-price').value), hp: parseInt(document.getElementById('car-hp').value), km: parseInt(document.getElementById('car-km').value), images: imagesArray, image: imagesArray[0] };
+      const url = isEditMode ? `${API}/api/inventory/${document.getElementById('car-id').value}` : `${API}/api/inventory`;
+      const method = isEditMode ? 'PUT' : 'POST';
+      try {
+        const res = await fetch(url, { method, headers: authHeaders(), body: JSON.stringify(payload) });
+        submitBtn.disabled = false; submitBtn.textContent = 'Save Vehicle';
+        if (!res.ok) { alert('Error saving vehicle'); return; }
+        modal.classList.remove('open'); fetchInventory();
+      } catch (err) { submitBtn.disabled = false; submitBtn.textContent = 'Save Vehicle'; alert('Network error: ' + err.message); }
+    });
+
+    // === LEADS TAB ===
+    const fetchLeads = async () => {
+      try {
+        const res = await fetch(`${API}/api/leads`, { headers: authHeaders() });
+        const leads = await res.json();
+        document.getElementById('stat-leads').textContent = leads.length;
+        const tbody = document.getElementById('leads-body');
+        tbody.innerHTML = '';
+        if (leads.length === 0) {
+          document.getElementById('leads-empty').style.display = 'block';
+          document.getElementById('leads-table-wrap').style.display = 'none';
+          return;
+        }
+        document.getElementById('leads-empty').style.display = 'none';
+        document.getElementById('leads-table-wrap').style.display = 'block';
+        leads.forEach(lead => {
+          const submitted = new Date(lead.submittedAt).toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><strong>${lead.name}</strong></td>
+            <td><a href="tel:${lead.phone}" style="color:var(--accent-olive);text-decoration:none;">${lead.phone}</a><br><small style="color:var(--text-muted);">${lead.email}</small></td>
+            <td><span class="lead-badge">${lead.model}</span></td>
+            <td>${lead.date || '—'}<br><small style="color:var(--text-muted);">${lead.time || ''}</small></td>
+            <td style="color:var(--text-muted);font-size:0.8rem;">${submitted}</td>
+            <td><button class="btn-icon-del" data-lead-id="${lead.id}">✕</button></td>`;
+          tbody.appendChild(tr);
+        });
+        document.querySelectorAll('.btn-icon-del').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            if (!confirm('Remove this lead?')) return;
+            await fetch(`${API}/api/leads/${btn.dataset.leadId}`, { method: 'DELETE', headers: authHeaders() });
+            fetchLeads();
+          });
+        });
+      } catch (err) { console.error('Leads error:', err); }
+    };
+    document.getElementById('refresh-leads-btn').addEventListener('click', fetchLeads);
+
+    // === STAFF TAB ===
+    const fetchStaff = async () => {
+      try {
+        const res = await fetch(`${API}/api/staff`, { headers: authHeaders() });
+        const staff = await res.json();
+        document.getElementById('stat-staff').textContent = staff.length;
+        const list = document.getElementById('staff-list');
+        list.innerHTML = '';
+        staff.forEach(s => {
+          const div = document.createElement('div');
+          div.className = 'staff-card';
+          div.innerHTML = `
+            <div class="staff-info">
+              <div class="staff-avatar">${s.username[0].toUpperCase()}</div>
+              <div><strong>${s.username}</strong><small>Admin · Created ${s.createdAt || 'N/A'}</small></div>
+            </div>
+            ${s.username !== localStorage.getItem('ag_admin_username') ? `<button class="btn-icon-del" data-staff="${s.username}">Remove</button>` : '<span style="color:var(--accent-olive);font-size:0.8rem;">You</span>'}`;
+          list.appendChild(div);
+        });
+        document.querySelectorAll('[data-staff]').forEach(btn => {
+          btn.addEventListener('click', async () => {
+            if (!confirm(`Remove staff account "${btn.dataset.staff}"?`)) return;
+            const r = await fetch(`${API}/api/staff/${btn.dataset.staff}`, { method: 'DELETE', headers: authHeaders() });
+            const d = await r.json();
+            if (r.ok) { fetchStaff(); } else { alert(d.message); }
+          });
+        });
+      } catch (err) { console.error('Staff error:', err); }
+    };
+
+    document.getElementById('create-staff-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msg = document.getElementById('staff-msg');
+      const username = document.getElementById('new-staff-user').value.trim();
+      const password = document.getElementById('new-staff-pass').value;
+      const res = await fetch(`${API}/api/staff`, { method: 'POST', headers: authHeaders(), body: JSON.stringify({ username, password }) });
+      const data = await res.json();
+      msg.style.display = 'block';
+      if (res.ok) {
+        msg.style.color = 'var(--accent-olive)'; msg.textContent = `✓ Account "${username}" created successfully!`;
+        document.getElementById('create-staff-form').reset();
+        fetchStaff();
+      } else {
+        msg.style.color = '#ff5050'; msg.textContent = '✕ ' + (data.message || 'Error creating account');
+      }
+      setTimeout(() => { msg.style.display = 'none'; }, 4000);
+    });
+
+    // === PASSWORD CHANGE ===
+    document.getElementById('change-pass-btn').addEventListener('click', () => {
+      document.getElementById('change-pass-form').reset();
+      document.getElementById('pass-error').style.display = 'none';
+      document.getElementById('pass-success').style.display = 'none';
+      document.getElementById('change-pass-modal').classList.add('open');
+    });
+    document.getElementById('close-pass-modal').addEventListener('click', () => document.getElementById('change-pass-modal').classList.remove('open'));
+    document.getElementById('change-pass-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const res = await fetch(`${API}/api/change-password`, { method: 'POST', headers: authHeaders(), body: JSON.stringify({ currentPassword: document.getElementById('current-pass').value, newPassword: document.getElementById('new-pass').value }) });
+      const data = await res.json();
+      if (res.ok) {
+        document.getElementById('pass-success').style.display = 'block';
+        document.getElementById('pass-error').style.display = 'none';
+        setTimeout(() => document.getElementById('change-pass-modal').classList.remove('open'), 1500);
+      } else {
+        document.getElementById('pass-error').textContent = data.message || 'Error';
+        document.getElementById('pass-error').style.display = 'block';
+        document.getElementById('pass-success').style.display = 'none';
+      }
+    });
+
+    // === INIT ===
+    fetchInventory();
+    // Pre-fetch leads count for stats
+    fetch(`${API}/api/leads`, { headers: authHeaders() }).then(r => r.json()).then(d => document.getElementById('stat-leads').textContent = d.length).catch(() => {});
+    fetch(`${API}/api/staff`, { headers: authHeaders() }).then(r => r.json()).then(d => document.getElementById('stat-staff').textContent = d.length).catch(() => {});
+  });
+  </script>
+</body>
+</html>
+

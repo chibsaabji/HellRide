@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vehicle Details | HellRide</title>
+    <meta name="description" content="View comprehensive vehicle specifications, pricing, and gallery details for our elite HellRide fleet.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+    <style>
+      /* ── Details page base ────────────────────────────────── */
+      .details-hero {
+        padding-top: 100px;
+        min-height: 100vh;
+        background: var(--bg-primary);
+      }
+
+      .details-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: start;
+        margin-top: 2rem;
+        padding-bottom: 4rem;
+      }
+
+      .gallery-main {
+        width: 100%;
+        border-radius: 12px;
+        overflow: hidden;
+        background: var(--bg-secondary);
+        border: 1px solid var(--glass-border);
+      }
+
+      .gallery-main img,
+      .gallery-main video {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .gallery-thumbs {
+        display: flex;
+        gap: 0.75rem;
+        margin-top: 1rem;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+        scrollbar-width: thin;
+      }
+
+      .gallery-thumbs img,
+      .gallery-thumbs video {
+        width: 100px;
+        height: 70px;
+        object-fit: cover;
+        border-radius: 8px;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: var(--transition);
+        flex-shrink: 0;
+      }
+
+      .gallery-thumbs img:hover,
+      .gallery-thumbs img.active,
+      .gallery-thumbs video:hover,
+      .gallery-thumbs video.active {
+        border-color: var(--accent-olive);
+      }
+
+      .details-info h1 {
+        font-size: clamp(1.75rem, 3.5vw, 3rem);
+        margin-bottom: 0.5rem;
+      }
+
+      .details-info .brand-badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        background: var(--glass-bg);
+        border: 1px solid var(--accent-olive);
+        color: var(--accent-olive);
+        border-radius: 20px;
+        font-size: 0.875rem;
+        margin-bottom: 1.5rem;
+        font-weight: 500;
+      }
+
+      .details-price {
+        font-size: clamp(1.5rem, 2.5vw, 2rem);
+        color: var(--text-main);
+        font-weight: 700;
+        margin-bottom: 2rem;
+      }
+
+      .specs-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .spec-item {
+        background: var(--bg-secondary);
+        padding: 1rem;
+        border-radius: 8px;
+        border: 1px solid var(--glass-border);
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .spec-item svg {
+        color: var(--accent-olive);
+        flex-shrink: 0;
+      }
+
+      .spec-item div small {
+        color: var(--text-muted);
+        display: block;
+        margin-bottom: 0.25rem;
+        font-size: 0.75rem;
+      }
+
+      .spec-item div strong {
+        font-size: 1.125rem;
+      }
+
+      .details-desc {
+        color: var(--text-muted);
+        line-height: 1.8;
+        font-size: 1.125rem;
+        margin-bottom: 3rem;
+        white-space: pre-wrap;
+      }
+
+      /* ── Laptop (≤ 1280px) ─────────────────────────────────── */
+      @media (max-width: 1280px) {
+        .details-grid {
+          gap: 3rem;
+        }
+      }
+
+      /* ── Tablet (≤ 1024px) ─────────────────────────────────── */
+      @media (max-width: 1024px) {
+        .details-grid {
+          grid-template-columns: 1fr;
+          gap: 2.5rem;
+        }
+
+        .details-info h1 {
+          font-size: clamp(1.75rem, 5vw, 2.5rem);
+        }
+      }
+
+      /* ── Mobile-large (≤ 767px) ────────────────────────────── */
+      @media (max-width: 767px) {
+        .details-hero {
+          padding-top: 80px;
+        }
+
+        .details-grid {
+          gap: 2rem;
+          margin-top: 1.5rem;
+          padding-bottom: 3rem;
+        }
+
+        .gallery-thumbs img,
+        .gallery-thumbs video {
+          width: 80px;
+          height: 56px;
+          border-radius: 6px;
+        }
+
+        .specs-grid {
+          grid-template-columns: 1fr 1fr;
+          gap: 0.75rem;
+        }
+
+        .spec-item {
+          padding: 0.75rem;
+          gap: 0.75rem;
+        }
+
+        .spec-item div strong {
+          font-size: 1rem;
+        }
+
+        .details-desc {
+          font-size: 1rem;
+          margin-bottom: 2rem;
+        }
+
+        .details-price {
+          font-size: 1.5rem;
+          margin-bottom: 1.25rem;
+        }
+      }
+
+      /* ── Mobile-small (≤ 480px) ────────────────────────────── */
+      @media (max-width: 480px) {
+        .details-hero {
+          padding-top: 72px;
+        }
+
+        .details-grid {
+          gap: 1.5rem;
+          margin-top: 1rem;
+          padding-bottom: 2rem;
+        }
+
+        .details-info h1 {
+          font-size: clamp(1.5rem, 7vw, 2rem);
+        }
+
+        .details-price {
+          font-size: 1.375rem;
+        }
+
+        .specs-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .gallery-thumbs {
+          gap: 0.5rem;
+        }
+
+        .gallery-thumbs img,
+        .gallery-thumbs video {
+          width: 70px;
+          height: 50px;
+        }
+
+        .details-desc {
+          font-size: 0.95rem;
+        }
+      }
+    </style>
+    <link rel="icon" type="image/x-icon" href="/Wheel.ico">
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar scrolled">
+      <div class="nav-container">
+        <a href="/index.html" class="logo">
+          <img src="./Logo/Logo.png" alt="HellRide Logo" />
+        </a>
+        <div class="nav-links">
+          <a href="/index.html#home">Home</a>
+          <a href="/index.html#inventory">Inventory</a>
+          <a href="/test-drive.html">Book Test Drive</a>
+          <a href="/about.html">About</a>
+        </div>
+        <button class="yandex-login" onclick="window.location.href='/admin.html'">
+          <svg class="y-icon" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M14.6 2.3l-4 8.7-2.7-4-2.8 1.4 4.5 6.7v6.6h3v-6l5-10.8-3-2.6z"/>
+          </svg>
+          Admin
+        </button>
+      </div>
+    </nav>
+
+    <!-- Details Section -->
+    <section class="details-hero">
+      <div class="container" id="details-container">
+        <div style="padding: 10rem 0; text-align: center;">
+          <h2 style="color: var(--text-muted);">Loading vehicle details...</h2>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container footer-content">
+        <div class="footer-brand">
+          <a href="/index.html" class="logo">
+            <img src="./Logo/Logo.png" alt="HellRide Logo" />
+          </a>
+          <p>The convergence of aerospace engineering and hyper-car performance.</p>
+        </div>
+        <div class="footer-links">
+          <div class="link-group">
+            <h4>Explore</h4>
+            <a href="/index.html#inventory">Inventory</a>
+            <a href="/test-drive.html">Test Drive</a>
+            <a href="/about.html">About Us</a>
+          </div>
+          <div class="link-group">
+            <h4>Legal</h4>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <div class="container">
+          <p>&copy; 2026 Vanshveer Chib. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script type="module">
+      document.addEventListener('DOMContentLoaded', async () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const carId = urlParams.get('id');
+        const container = document.getElementById('details-container');
+
+        if (!carId) {
+          container.innerHTML = '<div style="padding: 10rem 0; text-align: center;"><h2>Vehicle not found</h2><a href="/index.html" class="btn outline" style="margin-top: 2rem;">Return to Inventory</a></div>';
+          return;
+        }
+
+        try {
+          const res = await fetch((import.meta.env.VITE_API_URL || '') + `/api/inventory/${carId}`);
+          if (!res.ok) throw new Error('Failed to fetch');
+          const car = await res.json();
+
+          const images = car.images ? car.images : (car.image ? [car.image] : []);
+          const mainImg = images.length > 0 ? images[0] : '';
+          
+          const isVideo = (url) => url && url.toLowerCase().match(/\.(mp4|webm|ogg)$/i);
+          const getMediaHtml = (url, isThumb = false, idx = 0) => {
+            let mediaUrl = url;
+            if (mediaUrl.startsWith('./') || mediaUrl.startsWith('/')) {
+              mediaUrl = (import.meta.env.VITE_API_URL || '') + mediaUrl.replace(/^\.\//, '/');
+            }
+            if (isVideo(mediaUrl)) {
+              if (isThumb) return `<video src="${mediaUrl}" class="${idx === 0 ? 'active' : ''}" onclick="changeMainImage('${mediaUrl}', this, true)" muted playsinline></video>`;
+              return `<video id="main-display-img" src="${mediaUrl}" autoplay loop muted playsinline></video>`;
+            } else {
+              if (isThumb) return `<img src="${mediaUrl}" class="${idx === 0 ? 'active' : ''}" onclick="changeMainImage('${mediaUrl}', this, false)">`;
+              return `<img id="main-display-img" src="${mediaUrl}" alt="Vehicle Media">`;
+            }
+          };
+
+          let thumbsHtml = '';
+          if (images.length > 1) {
+            thumbsHtml = '<div class="gallery-thumbs">';
+            images.forEach((img, idx) => {
+              thumbsHtml += getMediaHtml(img, true, idx);
+            });
+            thumbsHtml += '</div>';
+          }
+
+          container.innerHTML = `
+            <a href="/index.html#inventory" style="color: var(--text-muted); text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 2rem;">
+              <i data-lucide="arrow-left"></i> Back to Inventory
+            </a>
+            <div class="details-grid">
+              <!-- Left: Gallery -->
+              <div class="gallery-wrapper">
+                <div class="gallery-main" id="main-gallery-container">
+                  ${getMediaHtml(mainImg)}
+                </div>
+                ${thumbsHtml}
+              </div>
+
+              <!-- Right: Info -->
+              <div class="details-info">
+                <span class="brand-badge">${car.brand || 'HellRide'}</span>
+                <h1>${car.name}</h1>
+                <div class="details-price">${new Intl.NumberFormat('ru-RU').format(car.price)} ₽</div>
+                
+                <div class="specs-grid">
+                  <div class="spec-item">
+                    <i data-lucide="zap" style="width:24px; height:24px;"></i>
+                    <div>
+                      <small>Power</small>
+                      <strong>${car.hp ? car.hp + ' HP' : 'N/A'}</strong>
+                    </div>
+                  </div>
+                  <div class="spec-item">
+                    <i data-lucide="gauge" style="width:24px; height:24px;"></i>
+                    <div>
+                      <small>Mileage</small>
+                      <strong>${car.km ? car.km.toLocaleString('ru-RU') + ' KM' : 'New'}</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="details-desc">
+                  ${car.description || 'No detailed description available for this vehicle.'}
+                </div>
+
+                <button class="btn primary full glow" onclick="window.location.href='/test-drive.html'" style="padding: 1.25rem; font-size: 1.125rem;">
+                  Book Test Drive
+                </button>
+              </div>
+            </div>
+          `;
+          lucide.createIcons();
+        } catch (err) {
+          console.error(err);
+          container.innerHTML = '<div style="padding: 10rem 0; text-align: center;"><h2>Error loading vehicle</h2><p style="color:var(--text-muted);">Please check your connection and try again.</p><a href="/index.html" class="btn outline" style="margin-top: 2rem;">Return to Inventory</a></div>';
+        }
+      });
+
+      // Global function for gallery
+      window.changeMainImage = function(src, el, isVideo = false) {
+        const container = document.getElementById('main-gallery-container');
+        if (isVideo) {
+          container.innerHTML = `<video id="main-display-img" src="${src}" autoplay loop muted playsinline></video>`;
+        } else {
+          container.innerHTML = `<img id="main-display-img" src="${src}" alt="Vehicle Media">`;
+        }
+        
+        document.querySelectorAll('.gallery-thumbs img, .gallery-thumbs video').forEach(media => media.classList.remove('active'));
+        el.classList.add('active');
+      };
+    </script>
+  </body>
+</html>
+
+

@@ -1,0 +1,54 @@
+[
+  {
+    "id": "1",
+    "name": "Lamborghini Urus",
+    "description": "The first iteration of the Antigravity lineup. Combines raw power with unparalleled luxury. Features an active aerodynamic spoiler and carbon-ceramic brakes.",
+    "price": 22500000,
+    "hp": 800,
+    "km": 1500,
+    "images": [
+      "./MainPage-Section/Section02.png"
+    ],
+    "brand": "Lamborghini",
+    "image": "./MainPage-Section/Section02.png"
+  },
+  {
+    "id": "2",
+    "name": "RAM 1500",
+    "description": "Engineered for maximum stealth and minimal drag. The matte finish absorbs light, while the quad-turbo V8 engine delivers blistering acceleration.",
+    "price": 34000000,
+    "hp": 1100,
+    "km": 500,
+    "images": [
+      "./MainPage-Section/Section03.png"
+    ],
+    "brand": "Dodge",
+    "image": "./MainPage-Section/Section03.png"
+  },
+  {
+    "id": "3",
+    "name": "McLaren",
+    "description": "The pinnacle of our engineering. The Apex is an unapologetic track monster that remains entirely street-legal. Features our proprietary hybrid kinetic recovery system.",
+    "price": 45000000,
+    "hp": 1500,
+    "km": 10,
+    "images": [
+      "./Inventory/McLaren/Car01.png"
+    ],
+    "brand": "McLaren",
+    "image": "./Inventory/McLaren/Car01.png"
+  },
+  {
+    "id": "1777331352244",
+    "name": "BMW M4",
+    "brand": "BMW",
+    "description": "Super CAr",
+    "price": 500000000,
+    "hp": 1200,
+    "km": 100,
+    "images": [
+      "./Inventory/BMW/M4/M4.jpg"
+    ],
+    "image": "./Inventory/BMW/M4/M4.jpg"
+  }
+]

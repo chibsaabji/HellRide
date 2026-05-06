@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us | HellRide</title>
+  <meta name="description" content="Learn about the vision behind HellRide. We craft terrestrial spacecraft designed for the most discerning drivers in the world.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+  <style>
+    .about-hero {
+      min-height: 100svh;
+      display: flex;
+      align-items: flex-start;
+      padding: 7rem 5vw 5rem;
+      position: relative;
+      overflow: visible;
+    }
+
+    .about-hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at right, rgba(112, 130, 56, 0.15) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .about-content {
+      width: 100%;
+      max-width: 800px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .about-content h1 {
+      font-size: clamp(2.5rem, 6vw, 6rem);
+      margin-bottom: 2rem;
+    }
+
+    .about-content p {
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: var(--text-muted);
+      margin-bottom: 1.25rem;
+      max-width: 600px;
+      line-height: 1.7;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+
+    .stat-item {
+      padding: 2rem 1.5rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-left: 3px solid var(--accent-olive);
+      border-radius: 12px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .stat-item h3 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--accent-olive);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      margin-bottom: 0.5rem;
+      line-height: 1;
+    }
+
+    .stat-item p {
+      font-size: 0.8rem;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+    }
+
+    .story-section {
+      padding: 8rem 5vw;
+      background: var(--bg-charcoal);
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+    .story-text h2 {
+      margin-bottom: 2rem;
+    }
+
+    .story-text p {
+      margin-bottom: 1.5rem;
+      max-width: 100%;
+    }
+
+    .story-image {
+      width: 100%;
+      height: 600px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--glass-border);
+    }
+
+    .story-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: right center;
+      filter: grayscale(100%) contrast(1.2);
+      transition: var(--transition);
+    }
+
+    .story-image:hover img {
+      filter: grayscale(0%) contrast(1.1);
+      transform: scale(1.05);
+    }
+
+    /* ── Tablet (≤ 1024px) ─────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .about-hero {
+        padding: 6rem 5vw 4rem;
+      }
+
+      .story-grid {
+        gap: 2.5rem;
+      }
+
+      .story-image {
+        height: 450px;
+      }
+    }
+
+    /* ── Mobile-large (≤ 900px) ─────────────────────────── */
+    @media (max-width: 900px) {
+      .story-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .story-image {
+        height: 400px;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+
+      .stat-item {
+        padding: 1.5rem 1.25rem;
+      }
+    }
+
+    /* ── Mobile (≤ 767px) ───────────────────────────────── */
+    @media (max-width: 767px) {
+      .about-hero {
+        min-height: auto;
+        padding: 5.5rem 1.25rem 3rem;
+        align-items: flex-start;
+      }
+
+      .about-content h1 {
+        font-size: clamp(2rem, 9vw, 3rem);
+        margin-bottom: 1rem;
+        line-height: 1.1;
+      }
+
+      .about-content p {
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        max-width: 100%;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+      }
+
+      .stat-item {
+        padding: 1.25rem 1rem;
+        border-radius: 10px;
+      }
+
+      .stat-item h3 {
+        font-size: clamp(1.5rem, 7vw, 2.25rem);
+      }
+
+      .stat-item p {
+        font-size: 0.72rem;
+        letter-spacing: 0.06em;
+      }
+
+      .story-section {
+        padding: 4rem 1.25rem;
+      }
+
+      .story-image {
+        height: 280px;
+      }
+    }
+
+    /* ── Phone stacked stats (<=600px) ─────────────────────── */
+    @media (max-width: 600px) {
+      .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+
+      .stat-item {
+        padding: 1.5rem 1.25rem;
+        border-radius: 14px;
+        border-left-width: 4px;
+      }
+
+      .stat-item h3 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        letter-spacing: -0.05em;
+      }
+
+      .stat-item p {
+        font-size: 0.8rem;
+        letter-spacing: 0.1em;
+      }
+    }
+
+    /* ── Mobile-small (≤ 480px) ──────────────────────────────── */
+    @media (max-width: 480px) {
+      .about-hero {
+        padding: 5rem 1rem 2.5rem;
+      }
+
+      .about-content h1 {
+        font-size: clamp(1.85rem, 8vw, 2.5rem);
+        margin-bottom: 0.875rem;
+      }
+
+      .about-content p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        max-width: 100%;
+      }
+
+      .story-section {
+        padding: 3rem 1rem;
+      }
+
+      .story-grid {
+        gap: 1.5rem;
+      }
+
+      .story-image {
+        height: 220px;
+        border-radius: 12px;
+      }
+
+      .story-text h2 {
+        font-size: clamp(1.5rem, 7vw, 2rem);
+        margin-bottom: 1rem;
+      }
+
+      .story-text p {
+        font-size: 0.95rem;
+        margin-bottom: 1rem;
+      }
+    }
+  </style>
+  <link rel="icon" type="image/x-icon" href="/Wheel.ico">
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar scrolled">
+    <div class="nav-container">
+      <a href="/index.html" class="logo">
+        <img src="./Logo/Logo.png" alt="HellRide Logo" />
+      </a>
+      <div class="nav-links">
+        <a href="/index.html#home">Home</a>
+        <a href="/index.html#inventory">Inventory</a>
+        <a href="/test-drive.html">Book Test Drive</a>
+        <a href="/about.html" class="active">About</a>
+      </div>
+      <div class="nav-actions" style="display: flex; gap: 1rem; align-items: center;">
+        <button id="nav-login-btn" class="yandex-login" onclick="window.location.href='/login.html'">
+          <i data-lucide="globe" style="width: 16px; height: 16px;"></i>
+          <span>Login</span>
+        </button>
+        <button id="mobile-menu-btn" class="mobile-toggle">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="about-hero">
+    <div class="about-content">
+      <h1>Defying the laws of physics.</h1>
+      <p>HellRide was born from a singular vision: to create vehicles that blur the line between aerospace
+        engineering and automotive passion.</p>
+      <p>We don't just build cars. We craft terrestrial spacecraft designed for the most discerning drivers in the
+        world.</p>
+
+      <div class="stats-grid">
+        <div class="stat-item">
+          <h3>0.02</h3>
+          <p>Drag Coefficient</p>
+        </div>
+        <div class="stat-item">
+          <h3>1500+</h3>
+          <p>Horsepower</p>
+        </div>
+        <div class="stat-item">
+          <h3>100%</h3>
+          <p>Carbon Fiber Core</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Story -->
+  <section class="story-section">
+    <div class="story-grid">
+      <div class="story-image">
+        <img src="./MainPage-Section/Section02.png" alt="Engineering">
+      </div>
+      <div class="story-text">
+        <h2>Precision Engineering</h2>
+        <p>Founded in 2026, our design philosophy strips away the unnecessary, leaving only pure performance and
+          uncompromised luxury. Every curve, every stitch, and every line of code in our vehicles is obsessively
+          refined.</p>
+        <p>The HellRide marketplace acts as the central node for a global network of hyper-car enthusiasts. We
+          provide not just vehicles, but entry into an elite tier of automotive lifestyle, complete with bespoke
+          concierge services and personalized track days.</p>
+        <a href="/test-drive.html" class="btn primary glow" style="margin-top: 2rem;">Experience it yourself</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <a href="/index.html" class="logo">
+          <img src="./Logo/Logo.png" alt="HellRide Logo" />
+        </a>
+        <p>The convergence of aerospace engineering and hyper-car performance.</p>
+      </div>
+      <div class="footer-links">
+        <div class="link-group">
+          <h4>Explore</h4>
+          <a href="/index.html#inventory">Inventory</a>
+          <a href="/test-drive.html">Test Drive</a>
+          <a href="/about.html">About Us</a>
+        </div>
+        <div class="link-group">
+          <h4>Legal</h4>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; 2026 Vanshveer Chib. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module" src="./main.js"></script>
+</body>
+
+</html>

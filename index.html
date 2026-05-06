@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HellRide | The Future of Motion</title>
+  <meta name="description"
+    content="HellRide - The ultimate marketplace for elite, hyper-performance vehicles. Experience the future of motion with our exclusive fleet.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+  <link rel="icon" type="image/x-icon" href="/Wheel.ico">
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="logo">
+        <img src="./Logo/Logo.png" alt="HellRide Logo" />
+      </a>
+      <div class="nav-links">
+        <a href="/index.html#home">Home</a>
+        <a href="/index.html#inventory">Inventory</a>
+        <a href="/test-drive.html">Book Test Drive</a>
+        <a href="/about.html">About</a>
+      </div>
+      <div class="nav-actions" style="display: flex; gap: 1rem; align-items: center;">
+        <button id="nav-login-btn" class="yandex-login" onclick="window.location.href='/login.html'">
+          <i data-lucide="globe" style="width: 16px; height: 16px;"></i>
+          <span>Login</span>
+        </button>
+        <button id="mobile-menu-btn" class="mobile-toggle">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Scrollytelling Hero -->
+  <div class="scrolly-container" id="home">
+    <div class="sticky-canvas-wrapper">
+      <img id="static-hero-img" src="./Inventory/McLaren/Car01.png" alt="Static Hero">
+      <canvas id="hero-canvas"></canvas>
+      <div class="glow-overlay" style="z-index: 3;"></div>
+    </div>
+
+    <!-- Beats -->
+    <section class="beat beat-1">
+      <div class="content center">
+        <h1>THE McLAREN W1</h1>
+        <h2>The Future of Motion.</h2>
+        <p class="price">От 150,000,000 ₽</p>
+      </div>
+    </section>
+
+    <section class="beat beat-2">
+      <div class="content left">
+        <h2>Precision in every Kilometre.</h2>
+        <p>Aerospace-grade materials combined with state-of-the-art aerodynamic engineering. Explore the Internet
+          Library of hyper-cars.</p>
+      </div>
+    </section>
+
+    <section class="beat beat-3">
+      <div class="content right">
+        <h2>Crafted for the Driver.</h2>
+        <p>Unmatched interior luxury, tactile feedback, and sensory immersion. Pure driving euphoria.</p>
+        <div class="actions">
+          <button class="btn outline" onclick="window.location.href='/login.html'">Add to Wishlist</button>
+          <button class="btn primary" onclick="window.location.href='/about.html'">About Us</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="beat beat-4">
+      <div class="content center">
+        <h2>Your Journey Begins Here.</h2>
+        <button class="btn primary glow" onclick="window.location.href='/test-drive.html'">Book a Test Drive</button>
+      </div>
+    </section>
+  </div>
+
+  <!-- Feature Section -->
+  <section class="feature-section">
+    <div class="container layout-split">
+      <div class="feature-content">
+        <h2>Engineering Excellence.</h2>
+        <p>Every HellRide vehicle is a masterpiece of modern engineering, meticulously crafted to deliver
+          unparalleled performance and luxury. From the aerodynamic chassis to the bespoke interior, no detail is
+          overlooked.</p>
+        <a href="/about.html" class="btn primary">Discover More</a>
+      </div>
+      <div class="feature-image">
+        <img src="./MainPage-Section/Section02.png" alt="HellRide Feature">
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Section 2 (Test Drive) -->
+  <section class="feature-section alt-bg">
+    <div class="container layout-split">
+      <div class="feature-image">
+        <img src="./MainPage-Section/Section03.png" alt="Test Drive HellRide">
+      </div>
+      <div class="feature-content">
+        <h2>Feel the Pulse of Innovation.</h2>
+        <p>Words can only convey so much. To truly understand the HellRide difference, you must experience it from
+          the driver's seat. Feel the instantaneous torque, the perfect weight distribution, and the absolute control.
+        </p>
+        <a href="/test-drive.html" class="btn primary glow">Book a Test Drive</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Inventory Section -->
+  <section class="inventory-section" id="inventory">
+    <div class="container layout-grid">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <h3>Filters</h3>
+        <div class="filter-group">
+          <label>Brand</label>
+          <div class="brand-filters">
+            <button class="brand-pill active" data-brand="All">All</button>
+            <button class="brand-pill" data-brand="Ford">Ford</button>
+            <button class="brand-pill" data-brand="Dodge">Dodge</button>
+            <button class="brand-pill" data-brand="Kia">Kia</button>
+            <button class="brand-pill" data-brand="BMW">BMW</button>
+            <button class="brand-pill" data-brand="Audi">Audi</button>
+            <button class="brand-pill" data-brand="Mercedes">Mercedes</button>
+            <button class="brand-pill" data-brand="Porsche">Porsche</button>
+            <button class="brand-pill" data-brand="Ferrari">Ferrari</button>
+            <button class="brand-pill" data-brand="Lamborghini">Lamborghini</button>
+            <button class="brand-pill" data-brand="Tesla">Tesla</button>
+            <button class="brand-pill" data-brand="McLaren">McLaren</button>
+            <button class="brand-pill" data-brand="Bentley">Bentley</button>
+            <button class="brand-pill" data-brand="Rolls Royce">Rolls Royce</button>
+          </div>
+        </div>
+        <div class="filter-group">
+          <label>Price Range (Max)</label>
+          <input type="range" class="slider" min="1000000" max="1000000000" value="1000000000">
+          <div class="range-labels">
+            <span>1M ₽</span>
+            <span>1B ₽</span>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <label>Horsepower (HP)</label>
+          <input type="range" min="300" max="1500" value="800" class="slider">
+          <div class="slider-values">
+            <span>300</span>
+            <span>1500+</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Grid -->
+      <div class="main-grid" id="inventory-grid">
+        <!-- Cars will be rendered here dynamically via main.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Floating Calculator -->
+  <div class="floating-calculator">
+    <div class="calc-header">
+      <div style="display: flex; align-items: center; gap: 0.75rem;">
+        <i data-lucide="calculator"></i>
+        <span>Monthly Quote</span>
+      </div>
+      <i data-lucide="x" class="close-calc"
+        style="margin-left: auto; color: var(--text-muted); cursor: pointer; transition: color 0.3s;"></i>
+    </div>
+    <div class="calc-body">
+      <input type="range" min="12" max="72" value="36" class="slider">
+      <div class="slider-values">
+        <span>12m</span>
+        <span>72m</span>
+      </div>
+      <div class="calc-result">
+        <small>Est.</small> 450,000 ₽ / mo
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <a href="/index.html" class="logo">
+          <img src="./Logo/Logo.png" alt="HellRide Logo" />
+        </a>
+        <p>The convergence of aerospace engineering and hyper-car performance.</p>
+      </div>
+      <div class="footer-links">
+        <div class="link-group">
+          <h4>Explore</h4>
+          <a href="/index.html#inventory">Inventory</a>
+          <a href="/test-drive.html">Test Drive</a>
+          <a href="/about.html">About Us</a>
+        </div>
+        <div class="link-group">
+          <h4>Legal</h4>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>&copy; 2026 Vanshveer Chib. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module" src="./main.js"></script>
+</body>
+
+</html>
