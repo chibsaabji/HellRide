@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+  plugins: [],
   // Files are now in the root, so no complex paths needed
   build: {
     outDir: 'dist',
