@@ -307,7 +307,7 @@ const initWishlistButtons = () => {
 const wishlistToggleFn = async function() {
   if (!userToken) {
     alert('Please login with Google to save cars to your wishlist!');
-    window.location.href = '/login.html';
+    window.location.href = './login.html';
     return;
   }
 
@@ -413,7 +413,7 @@ if (inventoryGrid) {
         <button class="wishlist-btn ${isWishlisted ? 'active' : ''}" data-id="${car.id}">
           <i data-lucide="heart" style="${isWishlisted ? 'fill: var(--accent-olive);' : ''}"></i>
         </button>
-        <div class="car-img-wrapper" style="position: relative; cursor: pointer;" onclick="window.location.href='/car-details.html?id=${car.id}'">
+        <div class="car-img-wrapper" style="position: relative; cursor: pointer;" onclick="window.location.href='./car-details.html?id=${car.id}'">
           ${mediaHtml}
           ${images.length > 1 ? `<span style="position:absolute; bottom:10px; right:10px; background:rgba(0,0,0,0.6); padding:0.25rem 0.5rem; border-radius:12px; font-size:0.75rem;">+${images.length - 1} media</span>` : ''}
         </div>
@@ -433,7 +433,7 @@ if (inventoryGrid) {
             ${formatPrice(car.price)}
           </p>
           
-          <button class="btn primary full" style="margin-top: auto; padding: 1rem;" onclick="window.location.href='/car-details.html?id=${car.id}'">Get Quote / Details</button>
+          <button class="btn primary full" style="margin-top: auto; padding: 1rem;" onclick="window.location.href='./car-details.html?id=${car.id}'">Get Quote / Details</button>
         </div>
       `;
       inventoryGrid.appendChild(card);

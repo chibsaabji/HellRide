@@ -5,7 +5,7 @@ lucide.createIcons({icons});\``);if(r===void 0)throw Error("`createIcons()` only
         <button class="wishlist-btn ${l?`active`:``}" data-id="${t.id}">
           <i data-lucide="heart" style="${l?`fill: var(--accent-olive);`:``}"></i>
         </button>
-        <div class="car-img-wrapper" style="position: relative; cursor: pointer;" onclick="window.location.href='/car-details.html?id=${t.id}'">
+        <div class="car-img-wrapper" style="position: relative; cursor: pointer;" onclick="window.location.href='./car-details.html?id=${t.id}'">
           ${o}
           ${i.length>1?`<span style="position:absolute; bottom:10px; right:10px; background:rgba(0,0,0,0.6); padding:0.25rem 0.5rem; border-radius:12px; font-size:0.75rem;">+${i.length-1} media</span>`:``}
         </div>
@@ -25,6 +25,6 @@ lucide.createIcons({icons});\``);if(r===void 0)throw Error("`createIcons()` only
             ${r(t.price)}
           </p>
           
-          <button class="btn primary full" style="margin-top: auto; padding: 1rem;" onclick="window.location.href='/car-details.html?id=${t.id}'">Get Quote / Details</button>
+          <button class="btn primary full" style="margin-top: auto; padding: 1rem;" onclick="window.location.href='./car-details.html?id=${t.id}'">Get Quote / Details</button>
         </div>
       `,v.appendChild(n)}),Hc({icons:{Heart:Ac,Zap:Bc,Gauge:Ec,Calculator:wc,Sparkles:Ic,X:Rc,Globe:Oc,LogOut:Mc,Menu:Pc}}),m()},a=document.querySelector(`.sidebar`);if(a){let e=a.querySelector(`.slider`),t=a.querySelectorAll(`.brand-pill`),n=`All`,r=()=>{let t=e?parseInt(e.value):1e8;document.querySelectorAll(`.car-card`).forEach(e=>{let r=parseInt(e.dataset.price),i=e.dataset.brand;r<=t&&(n===`All`||i===n)?e.style.display=`block`:e.style.display=`none`})};e&&e.addEventListener(`input`,r),t.forEach(e=>{e.addEventListener(`click`,e=>{t.forEach(e=>e.classList.remove(`active`)),e.currentTarget.classList.add(`active`),n=e.currentTarget.dataset.brand,r()})})}n()}}));export{Wc as t};

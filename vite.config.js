@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+  base: '/HellRide/',
   plugins: [],
   // Files are now in the root, so no complex paths needed
   build: {
