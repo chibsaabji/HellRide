@@ -27,8 +27,9 @@ window.updateGlobalLoader = () => {
   }
   
   if (canvas) {
-    totalTasks += globalFrameCount;
-    completedTasks += globalLoadedImages;
+    const requiredFrames = 10;
+    totalTasks += requiredFrames;
+    completedTasks += Math.min(globalLoadedImages, requiredFrames);
   }
 
   if (totalTasks === 0) {
