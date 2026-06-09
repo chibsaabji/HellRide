@@ -17,17 +17,17 @@ window.updateGlobalLoader = () => {
 
   const canvas = document.getElementById('hero-canvas');
   const inventoryGrid = document.getElementById('inventory-grid');
-  
+
   let totalTasks = 0;
   let completedTasks = 0;
-  
+
   if (inventoryGrid) {
     totalTasks += 1;
     completedTasks += globalInventoryLoaded ? 1 : 0;
   }
-  
+
   if (canvas) {
-    const requiredFrames = 10;
+    const requiredFrames = 50;
     totalTasks += requiredFrames;
     completedTasks += Math.min(globalLoadedImages, requiredFrames);
   }
@@ -196,7 +196,7 @@ if (canvas) {
     });
 
     // Text fade in
-    gsap.fromTo(content, 
+    gsap.fromTo(content,
       { opacity: 0, y: 50 },
       {
         opacity: 1,
@@ -209,7 +209,7 @@ if (canvas) {
         }
       }
     );
-    
+
     // Text fade out
     gsap.to(content, {
       opacity: 0,
@@ -239,12 +239,12 @@ if (canvas) {
 
   beats.forEach((beat, i) => {
     const timeStart = i * 2; // Each beat takes 2 phases: scroll up (1s) + pinned hold (1s)
-    
+
     // Phase 1: Scroll Up into view (Car rotates)
     if (i === 0) {
       masterTl.to('#static-hero-img', { opacity: 0, scale: 1.15, duration: 1 }, timeStart)
-              .to('#hero-canvas', { opacity: 1, duration: 1 }, timeStart)
-              .to(carSequence, { frame: framesPerSegment, snap: 'frame', ease: 'power1.inOut', onUpdate: drawFrame, duration: 1 }, timeStart);
+        .to('#hero-canvas', { opacity: 1, duration: 1 }, timeStart)
+        .to(carSequence, { frame: framesPerSegment, snap: 'frame', ease: 'power1.inOut', onUpdate: drawFrame, duration: 1 }, timeStart);
     } else {
       const nextFrame = (i === numBeats - 1) ? frameCount - 1 : (i + 1) * framesPerSegment;
       masterTl.to(carSequence, { frame: nextFrame, snap: 'frame', ease: 'power1.inOut', onUpdate: drawFrame, duration: 1 }, timeStart);
@@ -257,7 +257,7 @@ if (canvas) {
     // Phase 3: Unpin of the last element (Crossfade back to static)
     if (i === numBeats - 1) {
       masterTl.to('#static-hero-img', { opacity: 1, scale: 1, duration: 1 }, timeStart + 2)
-              .to('#hero-canvas', { opacity: 0, duration: 1 }, timeStart + 2);
+        .to('#hero-canvas', { opacity: 0, duration: 1 }, timeStart + 2);
     }
   });
 }
@@ -291,11 +291,11 @@ if (calcSlider && calcResult) {
     // Simple loan calculation
     const totalWithInterest = basePrice * (1 + interestRate * (months / 12));
     const monthlyPayment = Math.round(totalWithInterest / months);
-    
+
     // Format to string with commas
     calcResult.innerHTML = `<small>Est.</small> ${monthlyPayment.toLocaleString('ru-RU')} ₽ / mo`;
   });
-  
+
   // Initialize
   calcSlider.dispatchEvent(new Event('input'));
 }
@@ -309,7 +309,7 @@ const initWishlistButtons = () => {
   });
 };
 
-const wishlistToggleFn = async function() {
+const wishlistToggleFn = async function () {
   if (!userToken) {
     alert('Please login with Google to save cars to your wishlist!');
     window.location.href = './login.html';
@@ -318,7 +318,7 @@ const wishlistToggleFn = async function() {
 
   const carId = this.dataset.id;
   const icon = this.querySelector('svg');
-  
+
   // Optimistic UI update
   this.classList.toggle('active');
   if (this.classList.contains('active')) {
@@ -332,7 +332,7 @@ const wishlistToggleFn = async function() {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${userToken}` }
     });
-    
+
     if (!res.ok) {
       // Revert on failure
       this.classList.toggle('active');
@@ -359,13 +359,13 @@ if (inventoryGrid) {
   const fetchInventory = async () => {
     try {
       if (userToken) {
-        const wlRes = await fetch( (import.meta.env.VITE_API_URL || '') + '/api/wishlist', {
+        const wlRes = await fetch((import.meta.env.VITE_API_URL || '') + '/api/wishlist', {
           headers: { 'Authorization': `Bearer ${userToken}` }
         });
         if (wlRes.ok) userWishlist = await wlRes.json();
       }
 
-      const response = await fetch( (import.meta.env.VITE_API_URL || '') + '/api/inventory');
+      const response = await fetch((import.meta.env.VITE_API_URL || '') + '/api/inventory');
       if (!response.ok) throw new Error('Failed to fetch inventory');
       const cars = await response.json();
       renderInventory(cars);
@@ -384,7 +384,7 @@ if (inventoryGrid) {
 
   const renderInventory = (cars) => {
     inventoryGrid.innerHTML = '';
-    
+
     if (cars.length === 0) {
       inventoryGrid.innerHTML = '<p style="color:var(--text-muted);">No vehicles in stock.</p>';
       return;
@@ -396,14 +396,14 @@ if (inventoryGrid) {
       card.dataset.hp = car.hp || 0;
       card.dataset.price = car.price || 0;
       card.dataset.brand = car.brand || 'Antigravity';
-      
+
       const images = car.images ? car.images : (car.image ? [car.image] : []);
       const mainImg = images.length > 0 ? images[0] : '';
       let imgUrl = mainImg;
       if (imgUrl.startsWith('./') || imgUrl.startsWith('/')) {
         imgUrl = (import.meta.env.VITE_API_URL || '') + imgUrl.replace(/^\.\//, '/');
       }
-      
+
       const isVideo = (url) => url && url.toLowerCase().match(/\.(mp4|webm|ogg)$/i);
       const mediaHtml = isVideo(imgUrl)
         ? `<video src="${imgUrl}" autoplay loop muted playsinline></video>`
@@ -443,7 +443,7 @@ if (inventoryGrid) {
       `;
       inventoryGrid.appendChild(card);
     });
-    
+
     // Re-initialize icons for dynamically added elements
     createIcons({
       icons: {
@@ -470,15 +470,15 @@ if (inventoryGrid) {
 
     const filterCars = () => {
       const maxPrice = priceSlider ? parseInt(priceSlider.value) : 100000000;
-      
+
       const cards = document.querySelectorAll('.car-card');
       cards.forEach(card => {
         const price = parseInt(card.dataset.price);
         const brand = card.dataset.brand;
-        
+
         const priceMatch = price <= maxPrice;
         const brandMatch = activeBrand === 'All' || brand === activeBrand;
-        
+
         if (priceMatch && brandMatch) {
           card.style.display = 'block';
         } else {
