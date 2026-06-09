@@ -266,17 +266,21 @@ const calcSlider = document.querySelector('.floating-calculator .slider');
 const calcResult = document.querySelector('.floating-calculator .calc-result');
 const floatingCalculator = document.querySelector('.floating-calculator');
 const closeCalcBtn = document.querySelector('.close-calc');
+const openCalcBtn = document.getElementById('calc-sticky-btn');
 const basePrice = 45000000; // Antigravity Apex base price
 const interestRate = 0.05; // 5% yearly
+
+if (openCalcBtn && floatingCalculator) {
+  openCalcBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    floatingCalculator.classList.add('active');
+  });
+}
 
 if (closeCalcBtn && floatingCalculator) {
   closeCalcBtn.addEventListener('click', (e) => {
     e.stopPropagation();
-    floatingCalculator.style.transform = 'translateY(150%)';
-    floatingCalculator.style.opacity = '0';
-    setTimeout(() => {
-      floatingCalculator.style.display = 'none';
-    }, 400);
+    floatingCalculator.classList.remove('active');
   });
 }
 
