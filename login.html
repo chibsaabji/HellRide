@@ -188,7 +188,7 @@
           const data = await res.json();
           localStorage.setItem('ag_admin_token', data.token);
           staffError.style.display = 'none';
-          window.location.href = '/admin.html';
+          window.location.href = './admin.html';
         } else {
           staffError.style.display = 'block';
         }
@@ -201,13 +201,13 @@
     document.getElementById('user-login-form').addEventListener('submit', (e) => {
       e.preventDefault();
       alert('User login simulated! Redirecting to dashboard...');
-      window.location.href = '/index.html';
+      window.location.href = './index.html';
     });
 
     document.getElementById('signup-form').addEventListener('submit', (e) => {
       e.preventDefault();
       alert('Sign up simulated! Welcome to HellRide.');
-      window.location.href = '/index.html';
+      window.location.href = './index.html';
     });
 
     // Google Auth Logic
@@ -245,7 +245,7 @@
                 const data = await res.json();
                 localStorage.setItem('ag_user_token', data.token);
                 alert(`Welcome ${data.user.name}!`);
-                window.location.href = '/index.html';
+                window.location.href = './index.html';
               } else {
                 const errText = await res.text();
                 alert(`Server Error ${res.status}: ${errText}`);

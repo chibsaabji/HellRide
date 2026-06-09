@@ -9,20 +9,32 @@
     content="HellRide - The ultimate marketplace for elite, hyper-performance vehicles. Experience the future of motion with our exclusive fleet.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/x-icon" href="./assets/Wheel-CsxaPep-.ico">
-  <script type="module" crossorigin src="./assets/main-Dw7-2jCQ.js"></script>
-  <link rel="modulepreload" crossorigin href="./assets/style-D74fJMD3.js">
-  <link rel="modulepreload" crossorigin href="./assets/main-Bs_B_Yrv.js">
-  <link rel="stylesheet" crossorigin href="./assets/style-C-_yPUyj.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="/HellRide/assets/Wheel-CsxaPep-.ico">
+  <script type="module" crossorigin src="/HellRide/assets/main-YY8vhB3q.js"></script>
+  <link rel="modulepreload" crossorigin href="/HellRide/assets/style-C9cBtFIT.js">
+  <link rel="modulepreload" crossorigin href="/HellRide/assets/main-ZVst24xC.js">
+  <link rel="stylesheet" crossorigin href="/HellRide/assets/style-Cj-02HEQ.css">
 </head>
 
 <body>
+  <!-- Global Loading Screen -->
+  <div id="loading-screen" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #0a0a0a; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.6s ease-out;">
+    <img src="/HellRide/assets/Logo-C5bi3Bdv.png" alt="HellRide" style="height: 60px; margin-bottom: 2rem;">
+    <div style="width: 250px; height: 3px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; position: relative;">
+      <div id="loading-progress" style="position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: var(--accent-olive); transition: width 0.1s linear;"></div>
+    </div>
+    <div style="margin-top: 1rem; color: var(--text-muted); font-family: 'Inter', sans-serif; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.15em; display: flex; gap: 0.5rem; align-items: center;">
+      <span>Initializing</span>
+      <span id="loading-percent" style="color: var(--accent-olive); font-weight: 600; width: 3ch; text-align: right;">0%</span>
+    </div>
+  </div>
+
   <!-- Navbar -->
   <nav class="navbar">
     <div class="nav-container">
       <a href="#" class="logo">
-        <img src="./assets/Logo-C5bi3Bdv.png" alt="HellRide Logo" />
+        <img src="/HellRide/assets/Logo-C5bi3Bdv.png" alt="HellRide Logo" />
       </a>
       <div class="nav-links">
         <a href="./index.html#home">Home</a>
@@ -31,7 +43,7 @@
         <a href="./about.html">About</a>
       </div>
       <div class="nav-actions" style="display: flex; gap: 1rem; align-items: center;">
-        <button id="nav-login-btn" class="yandex-login" onclick="window.location.href='/login.html'">
+        <button id="nav-login-btn" class="yandex-login" onclick="window.location.href='./login.html'">
           <i data-lucide="globe" style="width: 16px; height: 16px;"></i>
           <span>Login</span>
         </button>
@@ -45,7 +57,7 @@
   <!-- Scrollytelling Hero -->
   <div class="scrolly-container" id="home">
     <div class="sticky-canvas-wrapper">
-      <img id="static-hero-img" src="./assets/Car01-CJt2sCnO.png" alt="Static Hero">
+      <img id="static-hero-img" src="/HellRide/assets/Car01-CJt2sCnO.png" alt="Static Hero">
       <canvas id="hero-canvas"></canvas>
       <div class="glow-overlay" style="z-index: 3;"></div>
     </div>
@@ -72,8 +84,8 @@
         <h2>Crafted for the Driver.</h2>
         <p>Unmatched interior luxury, tactile feedback, and sensory immersion. Pure driving euphoria.</p>
         <div class="actions">
-          <button class="btn outline" onclick="window.location.href='/login.html'">Add to Wishlist</button>
-          <button class="btn primary" onclick="window.location.href='/about.html'">About Us</button>
+          <button class="btn outline" onclick="window.location.href='./login.html'">Add to Wishlist</button>
+          <button class="btn primary" onclick="window.location.href='./about.html'">About Us</button>
         </div>
       </div>
     </section>
@@ -81,7 +93,7 @@
     <section class="beat beat-4">
       <div class="content center">
         <h2>Your Journey Begins Here.</h2>
-        <button class="btn primary glow" onclick="window.location.href='/test-drive.html'">Book a Test Drive</button>
+        <button class="btn primary glow" onclick="window.location.href='./test-drive.html'">Book a Test Drive</button>
       </div>
     </section>
   </div>
@@ -97,7 +109,7 @@
         <a href="./about.html" class="btn primary">Discover More</a>
       </div>
       <div class="feature-image">
-        <img src="./MainPage-Section/Section02.png" alt="HellRide Feature">
+        <img src="/HellRide/assets/Section02-BwrsfIg1.png" alt="HellRide Feature">
       </div>
     </div>
   </section>
@@ -106,7 +118,7 @@
   <section class="feature-section alt-bg">
     <div class="container layout-split">
       <div class="feature-image">
-        <img src="./MainPage-Section/Section03.png" alt="Test Drive HellRide">
+        <img src="/HellRide/assets/Section03-BDSN2TQa.png" alt="Test Drive HellRide">
       </div>
       <div class="feature-content">
         <h2>Feel the Pulse of Innovation.</h2>
@@ -196,7 +208,7 @@
     <div class="container footer-content">
       <div class="footer-brand">
         <a href="./index.html" class="logo">
-          <img src="./assets/Logo-C5bi3Bdv.png" alt="HellRide Logo" />
+          <img src="/HellRide/assets/Logo-C5bi3Bdv.png" alt="HellRide Logo" />
         </a>
         <p>The convergence of aerospace engineering and hyper-car performance.</p>
       </div>
@@ -221,7 +233,7 @@
     </div>
   </footer>
 
-  <!-- Scripts -->
+  <!-- Scripts -->
 </body>
 
 </html>

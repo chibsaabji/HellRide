@@ -171,7 +171,7 @@
   <script type="module">
   document.addEventListener('DOMContentLoaded', () => {
     const authToken = localStorage.getItem('ag_admin_token');
-    if (!authToken) { window.location.href = '/login.html'; return; }
+    if (!authToken) { window.location.href = './login.html'; return; }
 
     const API = import.meta.env.VITE_API_URL || '';
     let allCars = [];
@@ -182,7 +182,7 @@
     // --- LOGOUT ---
     document.getElementById('logout-btn').addEventListener('click', () => {
       localStorage.removeItem('ag_admin_token');
-      window.location.href = '/login.html';
+      window.location.href = './login.html';
     });
 
     // --- TABS ---
