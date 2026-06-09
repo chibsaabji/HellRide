@@ -85,8 +85,9 @@ app.post('/api/login', (req, res) => {
   }
 });
 
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
-const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+// --- GOOGLE OAUTH ---
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || '';
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET || '';
 
 app.post('/api/google-login', async (req, res) => {
   const { code } = req.body;
@@ -195,6 +196,7 @@ app.post('/api/leads', (req, res) => {
 });
 
 app.get('/api/leads', authenticateAdmin, (req, res) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
   const leads = getLeads();
   res.json(leads.reverse());
 });
@@ -252,7 +254,10 @@ app.post('/api/upload', authenticateAdmin, upload.array('files', 10), (req, res)
 });
 
 // --- INVENTORY CRUD ---
-app.get('/api/inventory', (req, res) => res.json(readData()));
+app.get('/api/inventory', (req, res) => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+  res.json(readData());
+});
 
 app.get('/api/inventory/:id', (req, res) => {
   const car = readData().find(c => String(c.id) === String(req.params.id));

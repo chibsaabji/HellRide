@@ -6,6 +6,57 @@ import { createIcons, Heart, Calculator, Zap, Gauge, Sparkles, X, Globe, LogOut,
 let userWishlist = [];
 const userToken = localStorage.getItem('ag_user_token');
 
+let isGlobalLoadingComplete = false;
+let globalLoadedImages = 0;
+let globalInventoryLoaded = false;
+const globalFrameCount = 240;
+
+window.updateGlobalLoader = () => {
+  const loader = document.getElementById('loading-screen');
+  if (!loader || isGlobalLoadingComplete) return;
+
+  const canvas = document.getElementById('hero-canvas');
+  const inventoryGrid = document.getElementById('inventory-grid');
+  
+  let totalTasks = 0;
+  let completedTasks = 0;
+  
+  if (inventoryGrid) {
+    totalTasks += 1;
+    completedTasks += globalInventoryLoaded ? 1 : 0;
+  }
+  
+  if (canvas) {
+    totalTasks += globalFrameCount;
+    completedTasks += globalLoadedImages;
+  }
+
+  if (totalTasks === 0) {
+    completedTasks = 1;
+    totalTasks = 1;
+  }
+
+  const percent = Math.floor((completedTasks / totalTasks) * 100);
+  const progressBar = document.getElementById('loading-progress');
+  const progressPercent = document.getElementById('loading-percent');
+
+  if (progressBar) progressBar.style.width = `${percent}%`;
+  if (progressPercent) progressPercent.textContent = `${percent}%`;
+
+  if (completedTasks >= totalTasks) {
+    isGlobalLoadingComplete = true;
+    loader.style.opacity = '0';
+    setTimeout(() => {
+      loader.style.display = 'none';
+      if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+    }, 600);
+  }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  window.updateGlobalLoader();
+});
+
 // Update Navbar if logged in as User
 if (userToken) {
   const navBtn = document.getElementById('nav-login-btn');
@@ -104,14 +155,20 @@ if (canvas) {
   // Preload Images
   for (let i = 0; i < frameCount; i++) {
     const img = new Image();
+    img.onload = () => {
+      globalLoadedImages++;
+      if (window.updateGlobalLoader) window.updateGlobalLoader();
+      if (i === 0) {
+        context.drawImage(images[0], 0, 0, canvas.width, canvas.height);
+      }
+    };
+    img.onerror = () => {
+      globalLoadedImages++; // Avoid getting stuck
+      if (window.updateGlobalLoader) window.updateGlobalLoader();
+    };
     img.src = currentFrame(i);
     images.push(img);
   }
-
-  // Draw first frame when loaded
-  images[0].onload = () => {
-    context.drawImage(images[0], 0, 0, canvas.width, canvas.height);
-  };
 
   // Segmented Canvas Scroll Animation & Beats Logic
   const beats = gsap.utils.toArray('.beat');
@@ -310,6 +367,9 @@ if (inventoryGrid) {
     } catch (error) {
       console.error('Error fetching inventory:', error);
       inventoryGrid.innerHTML = '<p style="color:var(--text-muted);">Failed to load inventory.</p>';
+    } finally {
+      globalInventoryLoaded = true;
+      if (window.updateGlobalLoader) window.updateGlobalLoader();
     }
   };
 
