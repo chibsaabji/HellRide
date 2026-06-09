@@ -521,23 +521,29 @@ canvas,
 
 .floating-calculator {
   position: fixed;
-  top: 0;
-  right: -350px;
-  width: 320px;
-  height: 100vh;
-  background: rgba(10, 10, 10, 0.95);
+  bottom: 6rem;
+  right: 2rem;
+  width: 300px;
+  background: rgba(15, 15, 15, 0.85);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border-left: 1px solid var(--glass-border);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
   z-index: 1000;
-  transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: -10px 0 30px rgba(0,0,0,0.8);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.5);
   display: flex;
   flex-direction: column;
+  transform: translateY(20px) scale(0.95);
+  opacity: 0;
+  pointer-events: none;
+  transform-origin: bottom right;
 }
 
 .floating-calculator.active {
-  right: 0;
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .floating-calculator:hover {
@@ -1466,11 +1472,9 @@ textarea.form-control {
 
   /* ─ Floating calculator ─ */
   .floating-calculator {
-    width: 100%;
-    right: -100%;
-  }
-  .floating-calculator.active {
-    right: 0;
+    width: calc(100% - 2rem);
+    right: 1rem;
+    bottom: 6rem;
   }
 
   /* ─ Footer ─ */
@@ -1636,11 +1640,9 @@ textarea.form-control {
 
   /* ─ Floating calculator: full width at bottom ─ */
   .floating-calculator {
-    width: 100%;
-    right: -100%;
-  }
-  .floating-calculator.active {
-    right: 0;
+    width: calc(100% - 1rem);
+    right: 0.5rem;
+    bottom: 5.5rem;
   }
 
   /* ─ Footer ─ */
