@@ -1,4 +1,4 @@
-<img src="Logo/Logo.png" alt="HellRide" width="150rem" height="80rem" padding="10rem 0rem"/>
+<img src="public/Logo/Logo.png" alt="HellRide" width="150rem" height="80rem" padding="10rem 0rem"/>
 
 HellRide is a high-performance, visually immersive web application featuring advanced 3D animations and a robust security-focused administrative backend. Built with a modern tech stack, it prioritizes smooth user experiences and secure data management.
 
